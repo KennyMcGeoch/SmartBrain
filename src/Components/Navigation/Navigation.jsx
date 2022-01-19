@@ -1,4 +1,4 @@
-import 'tachyons';
+
 
 const Navigation = () => {
 return(
