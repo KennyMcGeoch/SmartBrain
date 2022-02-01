@@ -4,22 +4,58 @@ import Navigation from './Components/Navigation/Navigation';
 import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
+import Clarifai from 'clarifai';
 import Particles from "react-tsparticles";
+import { Component } from 'react/cjs/react.production.min';
+import eslintConfigReactApp from 'eslint-config-react-app';
 
 
+const app = new Clarifai.App({
+  apiKey: 'ba619e535c3d41568ea89cf92ceb3916'
+});
 
-function App() {
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: "",
+    }
+  }
+
+  onInputChange = (event) => {
+    console.log(event.target.value);
   
+  }
+
+  onButtonSubmit = () => {
+    app.models
+      .predict(
+        Clarifai.COLOR_MODEL,
+        "https://samples.clarifai.com/face-det.jpg")
+      .then(
+      function(response) {
+        console.log(response);
+      },
+      function(err){
+
+      }
+
+    );
+
+  }
+
+  render() {
   return (
     <div className="App">
       <Particles options={particleOpts}/>
       <Navigation />
       <Logo />
       <Rank />
-      <ImageLinkForm />
+      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
       {/* <FaceRecognition /> */}
     </div>
   );
+  }
 }
 
 const particleOpts = {
