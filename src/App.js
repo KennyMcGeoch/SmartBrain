@@ -5,6 +5,7 @@ import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import Rank from './Components/Rank/Rank';
+import SignIn from './Components/SignIn/SignIn';
 import Clarifai from 'clarifai';
 import Particles from "react-tsparticles";
 import { Component } from 'react/cjs/react.production.min';
@@ -106,6 +107,7 @@ class App extends Component {
     <div className="App">
       <Particles options={particleOpts}/>
       <Navigation />
+      <SignIn />
       <Logo />
       <Rank name={this.state.user.name} entries={this.state.user.entries}  />
       <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
