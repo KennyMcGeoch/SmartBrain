@@ -6,6 +6,7 @@ import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import Rank from './Components/Rank/Rank';
 import SignIn from './Components/SignIn/SignIn';
+import Register from './Components/Registration/Registration';
 import Clarifai from 'clarifai';
 import Particles from "react-tsparticles";
 import { Component } from 'react/cjs/react.production.min';
@@ -106,13 +107,27 @@ class App extends Component {
   return (
     <div className="App">
       <Particles options={particleOpts}/>
-      <Navigation />
-      <SignIn />
-      <Logo />
-      <Rank name={this.state.user.name} entries={this.state.user.entries}  />
-      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-      <FaceRecognition box={box} imageUrl={imageUrl} />
-    </div>
+      <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        { route === 'home'
+          ? <div>
+              <Logo />
+              <Rank
+                name={this.state.user.name}
+                entries={this.state.user.entries}
+              />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onButtonSubmit={this.onButtonSubmit}
+              />
+              <FaceRecognition box={box} imageUrl={imageUrl} />
+            </div>
+          : (
+             route === 'signin'
+             ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+             : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            )
+        }
+      </div>
   );
   }
 }
