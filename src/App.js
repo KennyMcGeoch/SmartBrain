@@ -13,11 +13,13 @@ import { Component } from 'react/cjs/react.production.min';
 // import eslintConfigReactApp from 'eslint-config-react-app';
 
 
+
 const app = new Clarifai.App({
   apiKey: 'ba619e535c3d41568ea89cf92ceb3916'
 });
 
 class App extends Component {
+  
   constructor() {
     super();
     this.state = {
@@ -71,26 +73,30 @@ class App extends Component {
   
 
   onButtonSubmit = () => {
-    console.log("click");
-    this.setState({ imageUrl: this.state.input });
+    this.setState({imageUrl: this.state.input});
     app.models
       .predict(
-        {
-          id: "a403429f2ddf4b49b307e318f00e528b",
-        },
-        //Cant use imageUrl
-        this.state.input
-      )
-      .then(
-        function (response) {
-          console.log(
-            response.outputs[0].data.regions[0].region_info.bounding_box
-          );
-        },
-        function (err) {
-          //there was an error
+        Clarifai.FACE_DETECT_MODEL,
+        this.state.input)
+      .then(response => {
+        console.log('hi', response)
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count}))
+            })
+
         }
-      );
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      })
+      .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
