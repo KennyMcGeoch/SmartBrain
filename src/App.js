@@ -70,7 +70,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('https://lit-meadow-09763.fly.dev/imageurl', {
+    fetch('https://smartbrain-api-08sb.onrender.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -81,7 +81,7 @@ class App extends Component {
       .then(response => {
         console.log('hi', response)
         if (response) {
-          fetch('https://lit-meadow-09763.fly.dev/image', {
+          fetch('https://smartbrain-api-08sb.onrender.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
