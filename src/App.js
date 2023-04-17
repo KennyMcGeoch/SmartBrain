@@ -114,7 +114,7 @@ class App extends Component {
   return (
     <div className="App">
       <Particles options={particleOpts}/>
-      <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+      <Navigation zindex="1" isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
               <Logo />
@@ -130,7 +130,7 @@ class App extends Component {
             </div>
           : (
              route === 'signin'
-             ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+             ? <SignIn zindex="1" loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
              : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
         }
